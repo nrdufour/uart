@@ -214,7 +214,7 @@ options() ->
 		  {ok,uart()} | {error,term()}.
 
 open(DeviceName, Opts) ->
-    Path = code:priv_dir(uart),
+    Path = priv_dir(uart),
     {Type,_} = os:type(),
     Driver = "uart_drv",
     case load_driver(Path, Driver) of
@@ -945,3 +945,7 @@ load_driver(Path, Name) ->
 		false -> {error, enoent}
 	    end
     end.
+
+priv_dir(Mod) ->
+    Ebin = filename:dirname(code:which(Mod)),
+    filename:join(filename:dirname(Ebin), "priv").
